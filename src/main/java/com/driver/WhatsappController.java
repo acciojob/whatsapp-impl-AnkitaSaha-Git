@@ -2,17 +2,10 @@ package com.driver;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,7 +15,7 @@ public class WhatsappController {
     //Autowire will not work in this case, no need to change this and add autowire
     WhatsappService whatsappService = new WhatsappService();
 
-    @PostMapping("/add-message")
+    @PostMapping("/add-user")
     public String createUser(String name, String mobile) throws Exception {
         //If the mobile number exists in database, throw "User already exists" exception
         //Otherwise, create the user and return "SUCCESS"
@@ -48,8 +41,13 @@ public class WhatsappController {
         return whatsappService.createGroup(users);
     }
 
+    @PostMapping("/add-message")
+    public int createMessage(String content){
+        // The 'i^th' created message has message id 'i'.
+        // Return the message id.
 
-
+        return whatsappService.createMessage(content);
+    }
 
     @PutMapping("/send-message")
     public int sendMessage(Message message, User sender, Group group) throws Exception{
@@ -80,7 +78,7 @@ public class WhatsappController {
 //
 //        return whatsappService.removeUser(user);
 //    }
-
+//
 //    @GetMapping("/find-messages")
 //    public String findMessage(Date start, Date end, int K) throws Exception{
 //        //This is a bonus problem and does not contains any marks
